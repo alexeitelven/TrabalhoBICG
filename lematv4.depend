@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1604367573 source:d:\wscodeblocks\avaliacao de desempenho\lematv4\main.cpp
+	<conio.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
