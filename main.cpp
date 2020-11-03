@@ -144,12 +144,12 @@ void bicg(double **A, double *b, double *x, int NROW, int NCOL){
     double *aux=(double *)malloc(NCOL*sizeof(double));
     prodMVet(A,x,aux,nCols);
     double *r=(double*)calloc(NCOL,sizeof(double));
-    //subVet(b,aux,r,nCols);
-    for( i = 0; i<nCols;i++){
+    subVet(b,aux,r,nCols);
+    //for( i = 0; i<nCols;i++){
         //printf("b[%d]= %lf\n",i,x[i]);
-       r[i] = b[i] - ( *aux * x[i]);
+       //r[i] = b[i] - ( *aux);
        //printf("r[%d]= %lf\n",i,r[i]);
-    }
+   // }
 
 //r2 = r
     double *r2=(double*)calloc(NCOL,sizeof(double));
@@ -159,7 +159,7 @@ void bicg(double **A, double *b, double *x, int NROW, int NCOL){
 //p = np.zeros((nlin,1))
     double *p=(double*)calloc(NCOL,sizeof(double));
     for(i=0;i<nCols;i++){
-        p[i] = 1;
+        p[i] = 0;
     }
 //p2 = np.zeros((nlin,1))
     double *p2=(double*)calloc(NCOL,sizeof(double));
@@ -214,12 +214,12 @@ double rho = 1;
     printf ("BETA %lf -",beta);
 //p = np.add(r,np.multiply(beta,p))
     for( i = 0; i<nCols;i++){
-        p[i] +=r[i]+ (beta*p[i]);
+        p[i] =r[i]+(beta*p[i]);
         //printf("p[%d]= %lf\n",i,p[i]);
     }
 //p2 = np.add(r2,np.multiply(beta,p2))
     for( i = 0; i<nCols;i++){
-        p2[i] +=r2[i]+ (beta*p2[i]);
+        p2[i] =r2[i]+ (beta*p2[i]);
         //printf("p2[%d]= %lf\n",i,p2[i]);
     }
 //v = np.matmul(A,p)
@@ -234,7 +234,7 @@ double rho = 1;
 
 //x = np.add(x,np.multiply(alpha,p))
     for( i = 0; i<nCols;i++){
-        x[i] +=x[i]+ (alpha*p[i]);
+        x[i] =x[i]+ (alpha*p[i]);
         //printf("x[%d]= %lf\n",i,x[i]);
     }
 //#print(r)
