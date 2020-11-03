@@ -164,16 +164,11 @@ void bicg(double **A, double *b, double *x, int NROW, int NCOL){
 //p2 = np.zeros((nlin,1))
     double *p2=(double*)calloc(NCOL,sizeof(double));
     for(i=0;i<nCols;i++){
-        p2[i] = 1;
+        p2[i] = 0;
     }
 //rho = 1
 double rho = 1;
-   /*
-    double *rho=(double*)calloc(NCOL,sizeof(double));
-    for(i=0;i<nCols;i++){
-        rho[i] = 1;
-    }
-    */
+
 //#print(r)
 //i = 1
 //Declaração
@@ -190,7 +185,7 @@ double rho = 1;
     float alpha = 0.0;
     float erro = 0.0;
     double *aux3=(double *)malloc(NCOL*sizeof(double));
-    prodMVet(A,x,aux,nCols);
+    //prodMVet(A,x,aux,nCols);
 
 //while  i < IMAX:
     while (it < imax){
@@ -247,7 +242,7 @@ double rho = 1;
 //    break
         break;
 //r = np.subtract(r, np.multiply(alpha,v))
-    for(i = 0; i< nCols;i++){
+  for(i = 0; i< nCols;i++){
         r[i] = r[i] - ( alpha * v[i]);
         //printf("r[%d]= %lf\n",i,r[i]);
     }
@@ -434,11 +429,11 @@ printf("\n\nVou gerar o arquivo de saida\n\n");
 FILE *saida=fopen("saida.txt","wt");
         for(int i=0;i<NROW;i++){
             for(int j=0;j<NCOL;j++){
-                /*if (matriz[i][j]!=0)
+                if (A[i][j]!=0)
 				   fprintf(saida,"X");
                 else
-				   fprintf(saida," ");*/
-				fprintf(saida,"%16.8f ",A[i][j]);
+				   fprintf(saida," ");
+				//fprintf(saida,"%16.8f ",A[i][j]);
             }
             fprintf(saida,"\n");
         }
