@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define imax 1000000
-#define ERRO 0.0000001
+#define ERRO 0.0000000001
 //#define ERRO 1e-6
 void prodMVet(double **M, double x[], double r[], int TAM)
 {
@@ -183,8 +183,8 @@ double rho = 1;
     double rho0 = 1;
     double beta= 0;
     double *v=(double *)malloc(NCOL*sizeof(double));
-    float alpha = 0.0;
-    float erro = 0.0;
+    double alpha = 0.0;
+    double erro = 0.0;
     double *aux3=(double *)malloc(NCOL*sizeof(double));
 
 //while  i < IMAX:
@@ -233,7 +233,7 @@ double rho = 1;
     //erro = prodEsc(r,r,nCols);
     erro = prodEscT(r,r,nCols);
 //print(erro)
-    printf ("ERRO: %f\n - ",erro);
+    printf ("ERRO: %lf\n - ",erro);
 //if erro < ERRO * ERRO:
     if (erro < (ERRO * ERRO))
 //    break
@@ -257,7 +257,7 @@ double rho = 1;
 
 
     for (i=0;i<nCols;i++){
-        printf("Resultado: X[%d] %f\n",i ,x[i]);
+        printf("Resultado: X[%d] %lf\n",i ,x[i]);
     }
     printf("iteracoes: %d",it);
 }
