@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define imax 1000000
-#define ERRO 0.0000000001
+#define ERRO 0.000001
 //#define ERRO 1e-6
 void prodMVet(double **M, double x[], double r[], int TAM)
 {
