@@ -88,7 +88,14 @@ int gc(double **A, double *b, double *x, int TAM)
     }
     return it;
 }
-
+double prodEscT(double a[], double b[], int TAM)
+{
+    double soma=0;
+    int i;
+    for (i=0;i<TAM;i++)
+        soma+=a[TAM-i]*b[i];
+    return soma;
+}
 void mostra(double **A, int TAM)
 {
     int i,j;
@@ -175,30 +182,18 @@ double rho = 1;
     int it = 1;
     double rho0 = 1;
     double beta= 0;
-    /*
-    double **v=(double **)malloc(NROW*sizeof(double *));
-    for(int i = 0;i < NROW;i++){
-        v[i] = (double *)calloc(NCOL, sizeof(double));
-    }
-    */
     double *v=(double *)malloc(NCOL*sizeof(double));
     float alpha = 0.0;
     float erro = 0.0;
     double *aux3=(double *)malloc(NCOL*sizeof(double));
-    //prodMVet(A,x,aux,nCols);
 
 //while  i < IMAX:
     while (it < imax){
 //rho0 = rho
      rho0 = rho;
-    /*
-    double *rho0=(double*)calloc(NCOL,sizeof(double));
-    for(i=0;i<nCols;i++){
-        rho0[i] = rho[i];
-    }
-    */
 //rho = np.dot(np.transpose(r2), r)
-    rho = prodEsc(r2,r,nCols);
+    //rho = prodEsc(r2,r,nCols);
+    rho = prodEscT(r2,r,nCols);
     //printf("prodESC %lf",prodEsc(r2,r,nCols));
     printf ("RHO %lf - ",rho);
     //for( i = 0; i<nCols;i++){
@@ -214,7 +209,7 @@ double rho = 1;
     }
 //p2 = np.add(r2,np.multiply(beta,p2))
     for( i = 0; i<nCols;i++){
-        p2[i] =r2[i]+ (beta*p2[i]);
+        p2[i] = r2[i]+ (beta*p2[i]);
         //printf("p2[%d]= %lf\n",i,p2[i]);
     }
 //v = np.matmul(A,p)
@@ -223,18 +218,20 @@ double rho = 1;
     //    printf("V[%d]: %f\n" ,i,x[i]);
    // }
 //alpha = rho/np.dot(np.transpose(p2), v)
-    alpha = rho / prodEsc(p2,v,nCols);
+    //alpha = rho / prodEsc(p2,v,nCols);
+    alpha = rho / prodEscT(p2,v,nCols);
     //printf("prodESC %lf",prodEsc(p2,v,nCols));
     printf ("ALPHA %lf - ",alpha);
 
 //x = np.add(x,np.multiply(alpha,p))
     for( i = 0; i<nCols;i++){
-        x[i] =x[i]+ (alpha*p[i]);
+        x[i] = x[i]+ (alpha*p[i]);
         //printf("x[%d]= %lf\n",i,x[i]);
     }
 //#print(r)
 //erro = np.dot(np.transpose(r), r)
-    erro = prodEsc(r,r,nCols);
+    //erro = prodEsc(r,r,nCols);
+    erro = prodEscT(r,r,nCols);
 //print(erro)
     printf ("ERRO: %f\n - ",erro);
 //if erro < ERRO * ERRO:
@@ -260,9 +257,9 @@ double rho = 1;
 
 
     for (i=0;i<nCols;i++){
-        printf("Resultado: %f\n" ,x[i]);
+        printf("Resultado: X[%d] %f\n",i ,x[i]);
     }
-    printf("iterações: %d",it);
+    printf("iteracoes: %d",it);
 }
 
 void trata_arq(char *arquivo){
