@@ -192,8 +192,8 @@ double rho = 1;
 //rho0 = rho
      rho0 = rho;
 //rho = np.dot(np.transpose(r2), r)
-    //rho = prodEsc(r2,r,nCols);
-    rho = prodEscT(r2,r,nCols);
+    rho = prodEsc(r2,r,nCols);
+    //rho = prodEscT(r2,r,nCols);
     //printf("prodESC %lf",prodEsc(r2,r,nCols));
     printf ("RHO %lf - ",rho);
     //for( i = 0; i<nCols;i++){
@@ -218,8 +218,8 @@ double rho = 1;
     //    printf("V[%d]: %f\n" ,i,x[i]);
    // }
 //alpha = rho/np.dot(np.transpose(p2), v)
-    //alpha = rho / prodEsc(p2,v,nCols);
-    alpha = rho / prodEscT(p2,v,nCols);
+    alpha = rho / prodEsc(p2,v,nCols);
+    //alpha = rho / prodEscT(p2,v,nCols);
     //printf("prodESC %lf",prodEsc(p2,v,nCols));
     printf ("ALPHA %lf - ",alpha);
 
@@ -230,8 +230,8 @@ double rho = 1;
     }
 //#print(r)
 //erro = np.dot(np.transpose(r), r)
-    //erro = prodEsc(r,r,nCols);
-    erro = prodEscT(r,r,nCols);
+    erro = prodEsc(r,r,nCols);
+    //erro = prodEscT(r,r,nCols);
 //print(erro)
     printf ("ERRO: %lf\n - ",erro);
 //if erro < ERRO * ERRO:
