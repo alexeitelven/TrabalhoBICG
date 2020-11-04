@@ -4,7 +4,8 @@
 #include <string.h>
 
 #define imax 1000000
-#define ERRO 0.000001
+#define ERRO 0.00001
+
 //#define ERRO 1e-6
 void prodMVet(double **M, double x[], double r[], int TAM)
 {
@@ -186,6 +187,7 @@ double rho = 1;
     double alpha = 0.0;
     double erro = 0.0;
     double *aux3=(double *)malloc(NCOL*sizeof(double));
+    double aux4 = 0;
 
 //while  i < IMAX:
     while (it < imax){
@@ -225,7 +227,8 @@ double rho = 1;
 
 //x = np.add(x,np.multiply(alpha,p))
     for( i = 0; i<nCols;i++){
-        x[i] = x[i]+ (alpha*p[i]);
+        aux4 = (alpha*p[i]);
+        x[i] = x[i]+ aux4;
         //printf("x[%d]= %lf\n",i,x[i]);
     }
 //#print(r)
@@ -239,14 +242,18 @@ double rho = 1;
 //    break
         break;
 //r = np.subtract(r, np.multiply(alpha,v))
+    aux4 = 0;
   for(i = 0; i< nCols;i++){
-        r[i] = r[i] - ( alpha * v[i]);
-        //printf("r[%d]= %lf\n",i,r[i]);
+        aux4 = ( alpha * v[i]);
+        r[i] = r[i] - aux4;
+        //printf("r[%d]=%lf - ",i,r[i]);
     }
 //r2 = np.subtract(r2, np.multiply(alpha, np.matmul(np.transpose(A),p2)))
+   aux4 = 0;
     prodMtransVet(A,p2,aux3,nCols);
     for(i=0;i<nCols;i++){
-        r2[i] = r2[i] - ( alpha * (aux3[i]));
+            aux4 = ( alpha * (aux3[i]));
+        r2[i] = r2[i] - aux4;
         //r2[i] = r2[i] - ( alpha * (*aux3));
         //printf("r2[%d]= %lf\n",i,r2[i];
     }
