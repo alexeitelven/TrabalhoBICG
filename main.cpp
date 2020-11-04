@@ -244,10 +244,11 @@ double rho = 1;
         //printf("r[%d]= %lf\n",i,r[i]);
     }
 //r2 = np.subtract(r2, np.multiply(alpha, np.matmul(np.transpose(A),p2)))
+    prodMtransVet(A,p2,aux3,nCols);
     for(i=0;i<nCols;i++){
-        prodMtransVet(A,p2,aux3,nCols);
-        r2[i] = r2[i] - ( alpha * (*aux3));
-        //printf("r2[%d]= %lf\n",i,r2[i]);
+        r2[i] = r2[i] - ( alpha * (aux3[i]));
+        //r2[i] = r2[i] - ( alpha * (*aux3));
+        //printf("r2[%d]= %lf\n",i,r2[i];
     }
 //i = i + 1
     it+= 1;
