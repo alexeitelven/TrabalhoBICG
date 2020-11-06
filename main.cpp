@@ -89,14 +89,7 @@ int gc(double **A, double *b, double *x, int TAM)
     }
     return it;
 }
-double prodEscT(double a[], double b[], int TAM)
-{
-    double soma=0;
-    int i;
-    for (i=0; i<TAM; i++)
-        soma+=a[TAM-i]*b[i];
-    return soma;
-}
+
 void mostra(double **A, int TAM)
 {
     int i,j;
@@ -201,7 +194,6 @@ void bicg(double **A, double *b, double *x, int NROW, int NCOL)
         rho0 = rho;
 //rho = np.dot(np.transpose(r2), r)
         rho = prodEsc(r2,r,nCols);
-        //rho = prodEscT(r2,r,nCols);
         //printf("prodESC %lf",prodEsc(r2,r,nCols));
         printf ("RHO %lf - ",rho);
         //for( i = 0; i<nCols;i++){
@@ -229,7 +221,6 @@ void bicg(double **A, double *b, double *x, int NROW, int NCOL)
         // }
 //alpha = rho/np.dot(np.transpose(p2), v)
         alpha = rho / prodEsc(p2,v,nCols);
-        //alpha = rho / prodEscT(p2,v,nCols);
         //printf("prodESC %lf",prodEsc(p2,v,nCols));
         printf ("ALPHA %lf - ",alpha);
 
@@ -243,7 +234,6 @@ void bicg(double **A, double *b, double *x, int NROW, int NCOL)
 //#print(r)
 //erro = np.dot(np.transpose(r), r)
         erro = prodEsc(r,r,nCols);
-        //erro = prodEscT(r,r,nCols);
 //print(erro)
         printf ("ERRO: %lf\n - ",erro);
 //if erro < ERRO * ERRO:
@@ -285,7 +275,7 @@ void bicg(double **A, double *b, double *x, int NROW, int NCOL)
 void trata_arq(char *arquivo)
 {
     FILE *arqin = fopen(arquivo, "rt");
-     printf("- %s -\n",arquivo);
+    printf("- %s -\n",arquivo);
 
     if (!arqin)
     {
@@ -353,10 +343,11 @@ void trata_arq(char *arquivo)
 
 
     int n_elementos_linhas, n_elementos_coluna, tam_elemento;
-    if (strstr(VALFMT,"P")){
+    if (strstr(VALFMT,"P"))
+    {
         sscanf(VALFMT, "(%*dP%dE%d.%d)", &n_elementos_linhas, &n_elementos_coluna, &tam_elemento);
 
-        }
+    }
     else
         sscanf(VALFMT, "(%dE%d.%d)", &n_elementos_linhas, &n_elementos_coluna, &tam_elemento);
     printf("Valores: h� %d elementos com tamanho %d e %d decimais\n",
