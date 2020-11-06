@@ -285,6 +285,8 @@ void bicg(double **A, double *b, double *x, int NROW, int NCOL)
 void trata_arq(char *arquivo)
 {
     FILE *arqin = fopen(arquivo, "rt");
+     printf("- %s -\n",arquivo);
+
     if (!arqin)
     {
         printf("Erro na abertura de %s %d\n",arquivo,strlen(arquivo));
@@ -297,7 +299,7 @@ void trata_arq(char *arquivo)
     int TOTCRD, PTRCRD, INDCRD, VALCRD, RHSCRD;
     char MXTYPE[3];
     int NROW, NCOL, NNZERO, NELTVL;
-    char PTRFMT[10], INDFMT[10], VALFMT[10], RHSFMT[10];
+    char PTRFMT[20], INDFMT[20], VALFMT[20], RHSFMT[20];
 
     fgets(linha, 100, arqin);
     sscanf(linha, "%d %d %d %d %d", &TOTCRD, &PTRCRD, &INDCRD, &VALCRD, &RHSCRD);
@@ -316,31 +318,45 @@ void trata_arq(char *arquivo)
     printf("NELTVL = %d - Number of elemental matrix entries\n\n",NELTVL);
 
     fgets(linha, 100, arqin);
+    printf("%s \n",linha);
     strcpy(PTRFMT,strtok(linha," "));
+    printf("%s \n",PTRFMT);
     strcpy(INDFMT,strtok(NULL," "));
+    printf("%s\n",INDFMT);
     strcpy(VALFMT,strtok(NULL," "));
+    printf("%s\n",VALFMT);
     char *paux;
     if (paux=strtok(NULL," "))
         strcpy(RHSFMT,paux);
     else
         strcpy(RHSFMT,"");
-
+    printf("%s\n",RHSFMT);
+    printf("%s \n",PTRFMT);
+    printf("%s\n",INDFMT);
+    printf("%s\n",VALFMT);
     printf("PTRFMT = %s - Format for pointers\n",PTRFMT);
     printf("INDFMT = %s - Format for indices\n",INDFMT);
     printf("VALFMT = %s - Format for numerical values\n",VALFMT);
     printf("RHSFMT = %s - Format for numerical values of RHS\n\n",RHSFMT);
 
+
+
+
     int n_linhas1, n_elementos1;
     sscanf(PTRFMT, "(%dI%d)", &n_linhas1, &n_elementos1);
+
 
     int n_linhas2, n_elementos2;
     sscanf(INDFMT, "(%dI%d)", &n_linhas2, &n_elementos2);
 
     printf("Indices: h� %d elementos de %d colunas por linha\n",n_linhas2,n_elementos2);
 
+
     int n_elementos_linhas, n_elementos_coluna, tam_elemento;
-    if (strstr(VALFMT,"P"))
-        sscanf(VALFMT, "(%dP%dE%d.%d)", &n_elementos_linhas, &n_elementos_coluna, &tam_elemento);
+    if (strstr(VALFMT,"P")){
+        sscanf(VALFMT, "(%*dP%dE%d.%d)", &n_elementos_linhas, &n_elementos_coluna, &tam_elemento);
+
+        }
     else
         sscanf(VALFMT, "(%dE%d.%d)", &n_elementos_linhas, &n_elementos_coluna, &tam_elemento);
     printf("Valores: h� %d elementos com tamanho %d e %d decimais\n",
@@ -351,6 +367,9 @@ void trata_arq(char *arquivo)
     // N�mero da linha de cada elemento
     int *numlin = (int *)calloc(NNZERO,sizeof(int));
     double *entries = (double *)calloc(NNZERO,sizeof(double));
+
+    printf("(%dP%dE%d.%d)\n",n_elementos_linhas, n_elementos_coluna, tam_elemento);
+
 
     printf("\n\nInicio dos dados de cada coluna\n\n");
     char line[100];
@@ -376,19 +395,23 @@ void trata_arq(char *arquivo)
     }
     k = 0;
 
+
     for(int i =0; i<NCOL+1; i++)
     {
         printf("%d ",inicol[i]);
         fflush(stdout);
     }
+
     for (i = 0; i < NNZERO; i++)
     {
+
         if (i % n_linhas2 == 0)
         {
             fgets(line, 100, arqin);
             p = line;
         }
         strncpy(staux, p, n_elementos2);
+
         staux[n_elementos2] = '\0';
         sscanf(staux, "%d", &int_aux);
         numlin[k] = int_aux-1;
@@ -396,6 +419,7 @@ void trata_arq(char *arquivo)
         p += n_elementos2;
     }
     k = 0;
+
 
     /*        printf("\nN�mero da linha de cada elemento\n");
             for(int i = 0;i<NNZERO;i++)
@@ -405,7 +429,6 @@ void trata_arq(char *arquivo)
     double aux2;
     for (i = 0; i < NNZERO; i++)
     {
-
         if (i % n_elementos_linhas == 0)
         {
             fgets(line, 100, arqin);
